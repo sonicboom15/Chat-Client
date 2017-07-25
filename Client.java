@@ -138,6 +138,7 @@ public class Client  {
         public static void main(String[] args) {
             // default values
             int portNumber = 1500;
+            BlowFish ken = new BlowFish();
             String serverAddress = "localhost";
             String userName = "Anonymous";
             // depending of the number of arguments provided we fall through
@@ -190,7 +191,13 @@ public class Client  {
                             client.sendMessage(new ChatMessage(ChatMessage.WHOISIN, ""));              
                     }
                     else {              // default to ordinary message
+                            try{
+                            msg = ken.blowfish(msg,"e");
                             client.sendMessage(new ChatMessage(ChatMessage.MESSAGE, msg));
+                            }
+                            catch(Exception e7){
+                                System.out.println("Exception En");
+                            }
                     }
             }
             // done disconnect
@@ -201,29 +208,39 @@ public class Client  {
      * if we have a GUI or simply System.out.println() it in console mode
      */
         class ListenFromServer extends Thread {
-            public void run() {
-                while(true) {
-                    try {
-                        String msg = (String) sInput.readObject();
-                        // if console mode print the message and add back the prompt
-                        if(cg == null) {
+
+		public void run() {
+            BlowFish ken = new BlowFish();
+			while(true) {
+				try {
+					String msg = (String) sInput.readObject();
+					// if console mode print the message and add back the prompt
+                    System.out.println(msg);
+                    try{
+                    String newmsg = ken.blowfish(msg,"d");
+                    msg = newmsg;
+                    }
+                    catch(Exception e3){
+                        System.out.println("Exception" +e3);
+                    }
+					if(cg == null) {
                             System.out.println(msg);
-                            System.out.print("> ");
-                        }
-                        else {
+						    System.out.print("> ");
+					}
+					else {
                             cg.append(msg);
-                        }
-                    }
-                    catch(IOException e) {
-                        display("Server has close the connection: " + e);
-                        if(cg != null)
-                            cg.connectionFailed();
-                        break;
-                    }
-                    // can't happen with a String object but need the catch anyhow
-                    catch(ClassNotFoundException e2) {
-                    }
-                }
-            }
-        }
+					}
+				}
+				catch(IOException e) {
+					display("Server has close the connection: " + e);
+					if(cg != null) 
+						cg.connectionFailed();
+					break;
+				}
+				// can't happen with a String object but need the catch anyhow
+				catch(ClassNotFoundException e2) {
+				}
+			}
+		}
+	}
 }
