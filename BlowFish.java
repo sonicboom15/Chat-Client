@@ -21,13 +21,10 @@ public class BlowFish {
             return msgg;
         } 
         else{
-            SecureRandom random = new SecureRandom();
-            byte[] ivBytes = new byte[8];
-            random.nextBytes(ivBytes); // randomly generates bytes that fill the array
-            IvParameterSpec iv = new IvParameterSpec(ivBytes);
+            System.out.println(msg+"\t This is the recived one");
             byte[] ciphertext = DatatypeConverter.parseBase64Binary(msg);
             System.out.println("CipherRecived");
-            cipher.init(Cipher.DECRYPT_MODE, keySpec, iv);
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, new javax.crypto.spec.IvParameterSpec(IV.getBytes()));
             System.out.println("CipherInit");
             System.out.println(ciphertext.toString());
             byte[] message = cipher.doFinal(ciphertext);

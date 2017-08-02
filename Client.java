@@ -215,10 +215,8 @@ public class Client  {
 				try {
 					String msg = (String) sInput.readObject();
 					// if console mode print the message and add back the prompt
-                    System.out.println(msg);
                     try{
-                    String newmsg = ken.blowfish(msg,"d");
-                    msg = newmsg;
+                    msg = ken.blowfish(msg,"d");
                     }
                     catch(Exception e3){
                         System.out.println("Exception" +e3);

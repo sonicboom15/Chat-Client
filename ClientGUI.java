@@ -9,11 +9,8 @@ import java.awt.event.*;
 public class ClientGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-	// will first hold "Username:", later on "Enter message"
 	private JLabel label;
-	// to hold the Username and later on the messages
 	private JTextField tf;
-	// to hold the server address an the port number
 	private JTextField tfServer, tfPort;
 	// to Logout and get the list of the users
 	private JButton login, logout, whoIsIn;
@@ -33,10 +30,7 @@ public class ClientGUI extends JFrame implements ActionListener {
 		super("Chat Client");
 		defaultPort = port;
 		defaultHost = host;
-		
-		// The NorthPanel with:
 		JPanel northPanel = new JPanel(new GridLayout(3,1));
-		// the server name anmd the port number
 		JPanel serverAndPort = new JPanel(new GridLayout(1,5, 1, 3));
 		// the two JTextField with default value for server address and port number
 		tfServer = new JTextField(host);
